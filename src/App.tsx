@@ -1,5 +1,14 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import SearchInput from './components/SearchInput';
+
+const Wrapper = styled.div`
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Header = styled.div`
   display: flex;
@@ -15,12 +24,13 @@ const Header = styled.div`
 
 function App() {
   return (
-    <div className="App">
+    <Wrapper className="App">
       <Header>
         <div>국내 모든 임상시험 검색하고</div>
         <div>온라인으로 참여하기</div>
       </Header>
-    </div>
+      <SearchInput />
+    </Wrapper>
   );
 }
 

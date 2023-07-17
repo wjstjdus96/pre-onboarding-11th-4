@@ -7,6 +7,9 @@ const GlobalStyles = createGlobalStyle`
   body{
     background-color: #D0E8FD;
     padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
