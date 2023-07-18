@@ -5,7 +5,7 @@ import { Idiease } from '../contexts/ListContext';
 
 const Wrapper = styled.div`
   width: 82%;
-  max-height: 450px;
+  max-height: 420px;
   background-color: white;
   padding: 10px;
   border-radius: 10px;

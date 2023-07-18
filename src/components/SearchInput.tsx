@@ -47,13 +47,16 @@ export default function SearchInput() {
   };
 
   const getKeywordResults = (keyword: string) => {
-    getDiseases(keyword).then((res) => {
-      if (res.status == 200) {
-        console.log(res.data);
-        setDieaseData(res.data);
-      }
-    });
+    getDiseases(keyword, setDieaseData);
   };
+
+  useEffect(() => {
+    if (keyword) {
+      getKeywordResults(keyword);
+    } else {
+      setDieaseData([]);
+    }
+  }, [keyword]);
 
   return (
     <Wrapper>
@@ -66,7 +69,7 @@ export default function SearchInput() {
           placeholder="질환명을 입력해주세요"
         />
       </InputWrapper>
-      <button onClick={() => getKeywordResults(keyword)}>검색</button>
+      <button>검색</button>
     </Wrapper>
   );
 }
