@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import SearchInput from './components/SearchInput';
 import { ListProvider, useList } from './contexts/ListProvider';
+import ResultList from './components/ResultList';
 
 const Wrapper = styled.div`
   width: 600px;
@@ -16,6 +17,7 @@ const Header = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
   div {
     margin-bottom: 15px;
     font-size: 30px;
@@ -32,7 +34,8 @@ function App() {
         <div>온라인으로 참여하기</div>
       </Header>
       <SearchInput />
-      {isFocused && <div></div>}
+      {/* {isFocused && <ResultList/>} */}
+      <ResultList />
     </Wrapper>
   );
 }

@@ -58,7 +58,7 @@ export default function SearchInput() {
   return (
     <Wrapper>
       <InputWrapper>
-        <IoSearch size="24" />
+        <IoSearch size="24" opacity="0.5" />
         <input
           value={keyword}
           onChange={changeKeyword}
