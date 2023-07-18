@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { styled, createGlobalStyle } from 'styled-components';
+import { ListProvider } from './contexts/ListProvider';
 
 const GlobalStyles = createGlobalStyle`
   body{
@@ -18,7 +19,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <GlobalStyles />
-    <App />
+    <ListProvider>
+      <GlobalStyles />
+      <App />
+    </ListProvider>
   </>,
 );

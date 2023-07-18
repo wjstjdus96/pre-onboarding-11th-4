@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from 'styled-components';
 import SearchInput from './components/SearchInput';
+import { ListProvider, useList } from './contexts/ListProvider';
 
 const Wrapper = styled.div`
   width: 600px;
@@ -23,6 +24,7 @@ const Header = styled.div`
 `;
 
 function App() {
+  const { isFocused, setIsFocused } = useList();
   return (
     <Wrapper className="App">
       <Header>
@@ -30,6 +32,7 @@ function App() {
         <div>온라인으로 참여하기</div>
       </Header>
       <SearchInput />
+      {isFocused && <div></div>}
     </Wrapper>
   );
 }

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { IoSearch } from 'react-icons/io5';
 import { getDiseases } from '../services/keywordService';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useList } from '../contexts/ListProvider';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,8 +33,14 @@ const InputWrapper = styled.div`
 `;
 
 export default function SearchInput() {
-  const [keyword, setKeyword] = useState('');
-  const [dieaseData, setDieaseData] = useState([]);
+  const {
+    keyword,
+    dieaseData,
+    isFocused,
+    setDieaseData,
+    setIsFocused,
+    setKeyword,
+  } = useList();
 
   const changeKeyword = (e: React.FormEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
@@ -48,8 +55,6 @@ export default function SearchInput() {
     });
   };
 
-  useEffect(() => {}, []);
-
   return (
     <Wrapper>
       <InputWrapper>
@@ -57,6 +62,7 @@ export default function SearchInput() {
         <input
           value={keyword}
           onChange={changeKeyword}
+          onFocus={() => setIsFocused(true)}
           placeholder="질환명을 입력해주세요"
         />
       </InputWrapper>
