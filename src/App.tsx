@@ -34,7 +34,6 @@ function App() {
         <div>온라인으로 참여하기</div>
       </Header>
       <SearchInput />
-      {isFocused && <ResultList />}
     </Wrapper>
   );
 }

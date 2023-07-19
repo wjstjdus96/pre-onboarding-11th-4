@@ -4,8 +4,13 @@ import { getDiseases } from '../services/keywordService';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useList } from '../contexts/ListProvider';
 import useDebounce from '../hooks/useDebounce';
+import ResultList from './ResultList';
 
 const Wrapper = styled.div`
+  width: 85%;
+`;
+
+const SearchWrapper = styled.div`
   display: flex;
   button {
     border: none;
@@ -70,22 +75,27 @@ export default function SearchInput() {
   useEffect(() => {
     if (debouncedKeyword) {
       getKeywordResults(debouncedKeyword);
+    } else {
+      setDieaseData([]);
     }
   }, [debouncedKeyword]);
 
   return (
     <Wrapper>
-      <InputWrapper>
-        <IoSearch size="24" opacity="0.5" />
-        <input
-          value={keyword}
-          onChange={changeKeyword}
-          onFocus={() => setIsFocused(true)}
-          onKeyDown={handleFocusItem}
-          placeholder="질환명을 입력해주세요"
-        />
-      </InputWrapper>
-      <button>검색</button>
+      <SearchWrapper>
+        <InputWrapper>
+          <IoSearch size="24" opacity="0.5" />
+          <input
+            value={keyword}
+            onChange={changeKeyword}
+            onFocus={() => setIsFocused(true)}
+            onKeyDown={handleFocusItem}
+            placeholder="질환명을 입력해주세요"
+          />
+        </InputWrapper>
+        <button>검색</button>
+      </SearchWrapper>
+      {isFocused && <ResultList />}
     </Wrapper>
   );
 }
