@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import SearchInput from './components/SearchInput';
 import { ListProvider, useList } from './contexts/ListProvider';
@@ -10,7 +10,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: hidden;
 `;
 
 const Header = styled.div`
@@ -30,13 +29,12 @@ function App() {
   const { isFocused, setIsFocused } = useList();
   return (
     <Wrapper className="App">
-      <Header>
+      <Header onClick={() => setIsFocused(false)}>
         <div>국내 모든 임상시험 검색하고</div>
         <div>온라인으로 참여하기</div>
       </Header>
       <SearchInput />
-      {/* {isFocused && <ResultList/>} */}
-      <ResultList />
+      {isFocused && <ResultList />}
     </Wrapper>
   );
 }

@@ -9,6 +9,7 @@ export function ListProvider({ children }: IListProvider) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [dieaseData, setDieaseData] = useState<Idiease[]>([]);
   const [keyword, setKeyword] = useState<string>('');
+  const [focusListItem, setFocusListItem] = useState<number>(-1);
 
   return (
     <ListContext.Provider
@@ -16,9 +17,11 @@ export function ListProvider({ children }: IListProvider) {
         isFocused,
         dieaseData,
         keyword,
+        focusListItem,
         setIsFocused,
         setDieaseData,
         setKeyword,
+        setFocusListItem,
       }}
     >
       {children}

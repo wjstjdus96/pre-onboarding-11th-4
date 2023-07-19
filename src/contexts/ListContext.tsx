@@ -12,6 +12,8 @@ export interface ListContextProps {
   setDieaseData: (i: any) => void;
   keyword: string;
   setKeyword: (i: any) => void;
+  focusListItem: number;
+  setFocusListItem: (i: any) => void;
 }
 
 const initialListContext: ListContextProps = {
@@ -21,6 +23,8 @@ const initialListContext: ListContextProps = {
   setDieaseData: (i: any) => {},
   keyword: '',
   setKeyword: (i: any) => {},
+  focusListItem: -1,
+  setFocusListItem: (i: any) => {},
 };
 
 export const ListContext = createContext<ListContextProps>(initialListContext);
