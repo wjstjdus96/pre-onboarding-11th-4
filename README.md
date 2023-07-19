@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# 원티드 프론트엔드 인턴십 4주차 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 소개
 
-## Available Scripts
+[한국임상정보](https://github.com/facebook/react/issues)의 검색 영역 클론하기
 
-In the project directory, you can run:
+## 실행방법
 
-### `npm start`
+```
+$ npm install
+$ npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 서버 구동 방법
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+$ git clone https://github.com/KingDonggyu/clinicaltrials-search.git
+$ npm install
+$ npm start
+```
 
-### `npm test`
+## 개발환경
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 언어 : typescript
+- 라이브러리 및 프레임워크: react, axios, styled-components
 
-### `npm run build`
+## 요구사항
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### API 호출 별 로컬 캐싱 구현
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+( 아직 미완성인 기능입니다. .😭)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### API 호출 횟수 최적화 구현
 
-### `npm run eject`
+- useDebounce 커스텀 훅 사용
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+function useDebounce<T>({ value, delay }: debounceProps<T>): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value]);
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  return debouncedValue;
+}
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- useDebounce 내부 로직에 따라 0.5초 안에 다른 이벤트가 발생하지 않으면 정상적으로 변한 value가 리턴되어 값을 갖게 될 것이고 그렇지 않으면 기존 값을 그대로 리턴
+- useEffect를 사용하여 의존성 배열에 해당 값을 넣어 값이 변할 경우 api를 호출
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 키보드만으로 추천 검색어들로 이동 가능하도록 구현
+
+- context에 focus된 item의 인덱스 값을 가진 state 생성
+
+- 키보드 이벤트를 다루는 handleFocusItem 함수 구현
+
+```
+const handleFocusItem = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        setFocusListItem((prev: number) => (prev + 1) % dieaseData.length);
+        break;
+      case 'ArrowUp':
+        setFocusListItem((prev: number) =>
+          prev - 1 < 0 ? dieaseData.length - 1 : prev - 1,
+        );
+    }
+  };
+```
+
+- input의 onKeyDown 이벤트 핸들러로 전달
