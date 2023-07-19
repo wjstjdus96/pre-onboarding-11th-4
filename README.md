@@ -34,7 +34,7 @@ $ npm start
 
 - useDebounce 커스텀 훅 사용
 
-```
+```typescript
 function useDebounce<T>({ value, delay }: debounceProps<T>): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -50,7 +50,6 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
 
   return debouncedValue;
 }
-
 ```
 
 - useDebounce 내부 로직에 따라 0.5초 안에 다른 이벤트가 발생하지 않으면 정상적으로 변한 value가 리턴되어 값을 갖게 될 것이고 그렇지 않으면 기존 값을 그대로 리턴
@@ -62,18 +61,18 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
 
 - 키보드 이벤트를 다루는 handleFocusItem 함수 구현
 
-```
+```typescript
 const handleFocusItem = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (e.key) {
-      case 'ArrowDown':
-        setFocusListItem((prev: number) => (prev + 1) % dieaseData.length);
-        break;
-      case 'ArrowUp':
-        setFocusListItem((prev: number) =>
-          prev - 1 < 0 ? dieaseData.length - 1 : prev - 1,
-        );
-    }
-  };
+  switch (e.key) {
+    case 'ArrowDown':
+      setFocusListItem((prev: number) => (prev + 1) % dieaseData.length);
+      break;
+    case 'ArrowUp':
+      setFocusListItem((prev: number) =>
+        prev - 1 < 0 ? dieaseData.length - 1 : prev - 1,
+      );
+  }
+};
 ```
 
 - input의 onKeyDown 이벤트 핸들러로 전달
