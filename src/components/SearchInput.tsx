@@ -3,6 +3,7 @@ import { IoSearch } from 'react-icons/io5';
 import { getDiseases } from '../services/keywordService';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useList } from '../contexts/ListProvider';
+import useDebounce from '../hooks/useDebounce';
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,6 +53,7 @@ export default function SearchInput() {
     getDiseases(keyword, setDieaseData);
     setFocusListItem(-1);
   };
+  const debouncedKeyword = useDebounce({ value: keyword, delay: 500 });
 
   const handleFocusItem = (e: React.KeyboardEvent<HTMLInputElement>) => {
     switch (e.key) {
@@ -66,12 +68,10 @@ export default function SearchInput() {
   };
 
   useEffect(() => {
-    if (keyword) {
-      getKeywordResults(keyword);
-    } else {
-      setDieaseData([]);
+    if (debouncedKeyword) {
+      getKeywordResults(debouncedKeyword);
     }
-  }, [keyword]);
+  }, [debouncedKeyword]);
 
   return (
     <Wrapper>
