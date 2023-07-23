@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { IoSearch } from 'react-icons/io5';
-import { getDiseases } from '../services/keywordService';
+import { getDiseases } from '../apis/keywordService';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useList } from '../contexts/ListProvider';
 import useDebounce from '../hooks/useDebounce';
 import ResultList from './ResultList';
+import { CacheApiServer } from '../utils/cacheStorage';
 
 const Wrapper = styled.div`
   width: 85%;
@@ -54,8 +55,9 @@ export default function SearchInput() {
     setKeyword(e.currentTarget.value);
   };
 
-  const getKeywordResults = (keyword: string) => {
-    getDiseases(keyword, setDieaseData);
+  const getKeywordResults = async (keyword: string) => {
+    const response = await CacheApiServer.getDieasesByQuery(keyword);
+    setDieaseData(response.data);
     setFocusListItem(-1);
   };
   const debouncedKeyword = useDebounce({ value: keyword, delay: 500 });
