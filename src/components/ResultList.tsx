@@ -33,6 +33,7 @@ export default function ResultList() {
       ) : (
         <>
           <p>추천 검색어</p>
+          {dieaseData.length == 0 && <p>일치하는 질환 없음</p>}
           {dieaseData.map((diease: Idiease, index: number) => (
             <ResultItem
               key={index}
