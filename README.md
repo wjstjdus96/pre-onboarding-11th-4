@@ -24,11 +24,11 @@ $ npm start
 - 언어 : typescript
 - 라이브러리 및 프레임워크: react, axios, styled-components
 
-## 요구사항
+## 기능 구현
 
 ### API 호출 별 로컬 캐싱 구현
 
-( 아직 미완성인 기능입니다. .😭)
+- cacheStorage API 사용
 
 ### API 호출 횟수 최적화 구현
 
@@ -53,6 +53,7 @@ function useDebounce<T>({ value, delay }: debounceProps<T>): T {
 ```
 
 - useDebounce 내부 로직에 따라 0.5초 안에 다른 이벤트가 발생하지 않으면 정상적으로 변한 value가 리턴되어 값을 갖게 될 것이고 그렇지 않으면 기존 값을 그대로 리턴
+
 - useEffect를 사용하여 의존성 배열에 해당 값을 넣어 값이 변할 경우 api를 호출
 
 ### 키보드만으로 추천 검색어들로 이동 가능하도록 구현
