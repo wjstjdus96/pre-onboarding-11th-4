@@ -43,6 +43,7 @@ export default function SearchInput() {
     keyword,
     dieaseData,
     isFocused,
+    focusListItem,
     setDieaseData,
     setIsFocused,
     setKeyword,
@@ -69,6 +70,9 @@ export default function SearchInput() {
         setFocusListItem((prev: number) =>
           prev - 1 < 0 ? dieaseData.length - 1 : prev - 1,
         );
+        break;
+      case 'Enter':
+        setKeyword(dieaseData[focusListItem].sickNm);
     }
   };
 
