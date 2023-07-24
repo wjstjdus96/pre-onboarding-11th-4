@@ -1,6 +1,5 @@
 import { IoSearch } from 'react-icons/io5';
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
 import { useList } from '../contexts/ListProvider';
 
 const Wrapper = styled.div<{ isfocus?: boolean }>`

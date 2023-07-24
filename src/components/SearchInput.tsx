@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { IoSearch } from 'react-icons/io5';
-import { getDiseases } from '../apis/keywordService';
-import { useState, useEffect, useContext, useRef } from 'react';
+import { useEffect } from 'react';
 import { useList } from '../contexts/ListProvider';
 import useDebounce from '../hooks/useDebounce';
 import ResultList from './ResultList';
@@ -44,7 +43,6 @@ export default function SearchInput() {
     keyword,
     dieaseData,
     isFocused,
-    focusListItem,
     setDieaseData,
     setIsFocused,
     setKeyword,

@@ -1,4 +1,4 @@
-import { useContext, useState, useMemo } from 'react';
+import { useContext, useState } from 'react';
 import { Idiease, ListContext } from './ListContext';
 
 interface IListProvider {

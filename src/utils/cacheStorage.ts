@@ -1,8 +1,5 @@
 import { getDiseasesData } from '../apis/keywordService';
-import { BASE_URL } from '../consts/api';
-
-const HEADER_FETCH_DATE = 'fetch-date';
-const ONE_DAY_MILISECOND = 60 * 60 * 1000;
+import { BASE_URL, HEADER_FETCH_DATE, ONE_DAY_MILISECOND } from '../consts/api';
 
 export class CacheApiServer {
   private static diseasesCahchStorage = 'DISEASE_CACHE';
