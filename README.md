@@ -19,6 +19,10 @@ $ npm install
 $ npm start
 ```
 
+## 실행화면
+![인턴십과제3](https://github.com/wjstjdus96/pre-onboarding-11th-4/assets/77755620/44434173-ea00-432f-8606-69dfeda97952)
+
+
 ## 개발환경
 
 - 언어 : typescript
@@ -29,6 +33,71 @@ $ npm start
 ### API 호출 별 로컬 캐싱 구현
 
 - cacheStorage API 사용
+- 캐시를 다루는 클래스를 생성
+- 캐시 저장소에서 캐시 응답과 만료기간 확인 후 서버에 데이터를 요청하거나 기존 캐시를 가져옴
+
+```typescript
+export class CacheApiServer {
+  private static diseasesCahchStorage = 'DISEASE_CACHE';
+
+  static async getDieasesByQuery(query: string) {
+    const url = `${BASE_URL}/sick?q=${query}`;
+    const cache = await caches.open(this.diseasesCahchStorage);
+    return await this.getValidResponse(cache, url, query);
+  }
+
+  private static async getValidResponse(
+    cache: Cache,
+    url: string,
+    query: string,
+  ) {
+    const cacheResponse = await caches.match(url);
+    return cacheResponse && !this.isCacheExpired(cacheResponse)
+      ? await cacheResponse.json()
+      : await this.getFetchResponse(cache, url, query);
+  }
+
+  private static async getFetchResponse(
+    cache: Cache,
+    url: string,
+    query: string,
+  ) {
+    const fetchResponse = await getDiseasesData(query);
+    if (fetchResponse.data.length !== 0) {
+      this.setCacheResponse(cache, url, fetchResponse);
+    }
+    return fetchResponse;
+  }
+
+  static async setCacheResponse(cache: Cache, url: string, data: any) {
+    const cacheResponse = new Response(JSON.stringify(data));
+    const newResponse = await this.getResponseWithFetchDate(cacheResponse);
+    cache.put(url, newResponse);
+  }
+
+  private static async getResponseWithFetchDate(fetchResponse: Response) {
+    const cloneResponse = fetchResponse.clone();
+    const newBody = await cloneResponse.blob();
+    const newHeaders = new Headers(cloneResponse.headers);
+    newHeaders.append(HEADER_FETCH_DATE, new Date().toISOString());
+
+    return new Response(newBody, {
+      status: cloneResponse.status,
+      statusText: cloneResponse.statusText,
+      headers: newHeaders,
+    });
+  }
+
+  private static isCacheExpired(cacheResponse: Response) {
+    const fetchDate = new Date(
+      cacheResponse.headers.get(HEADER_FETCH_DATE)!,
+    ).getTime();
+    const today = new Date().getTime();
+    return today - fetchDate > ONE_DAY_MILISECOND;
+  }
+}
+
+```
 
 ### API 호출 횟수 최적화 구현
 
